@@ -1,0 +1,5 @@
+package _02_09_OTTOBRE._03_BUILDER;
+
+public enum Transmission {
+    SINGLE_SPEED, MANUAL, AUTOMATIC, SEMI_AUTOMATIC
+}

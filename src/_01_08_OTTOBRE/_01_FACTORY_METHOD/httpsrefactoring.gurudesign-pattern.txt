@@ -1,0 +1,39 @@
+https://refactoring.guru/design-patterns/factory-method/java/example
+
+
+
+Il **Factory Method** è un pattern di progettazione creazionale che fornisce un modo per creare oggetti attraverso un metodo, ma delegando alle sottoclassi la responsabilità di decidere quale tipo di oggetto istanziare. In altre parole, il Factory Method consente alla classe principale di invocare un metodo per ottenere un oggetto, senza conoscere quale classe concreta verrà effettivamente istanziata. Questo approccio è utile quando una classe non sa in anticipo quale tipo specifico di oggetto deve creare o quando vuole lasciare alle sottoclassi la libertà di scegliere il tipo di oggetto da creare.
+
+### Perché è stato usato il Factory Method in questo esempio?
+
+In questo esempio, l'applicazione ha bisogno di creare e visualizzare una finestra di dialogo (`Dialog`) che contiene un pulsante (`Button`). Tuttavia, i dettagli specifici della finestra di dialogo e del pulsante variano a seconda dell'ambiente in cui l'applicazione viene eseguita:
+
+- **In ambiente Windows**: l'applicazione visualizza una finestra e un pulsante specifici per Windows (`WindowsDialog` e `WindowsButton`).
+- **In ambiente HTML (web)**: l'applicazione visualizza una finestra di dialogo e un pulsante compatibili con HTML (`HtmlDialog` e `HtmlButton`).
+
+Utilizzando il Factory Method, l'applicazione può determinare a runtime quale versione concreta del dialogo e del pulsante utilizzare, in base al sistema operativo.
+
+### Cosa si intende per Factory Method?
+
+Il **Factory Method** è un metodo definito in una classe base (nel nostro esempio, `Dialog`) che è responsabile della creazione di oggetti. Tuttavia, questo metodo non crea direttamente l'oggetto ma delega alle sottoclassi (`WindowsDialog` e `HtmlDialog`) la responsabilità di specificare quale classe concreta di oggetto restituire.
+
+Nel caso specifico:
+
+1. **Classe base `Dialog`**:
+   - Definisce un metodo astratto `createButton()` che deve essere implementato dalle sottoclassi. Questo metodo rappresenta il Factory Method.
+   - La classe `Dialog` non sa quale tipo specifico di `Button` verrà creato; sa solo che riceverà un'istanza che implementa l'interfaccia `Button`.
+
+2. **Sottoclassi `WindowsDialog` e `HtmlDialog`**:
+   - Implementano il Factory Method `createButton()` e restituiscono rispettivamente un `WindowsButton` e un `HtmlButton`.
+   - In questo modo, ogni sottoclasse specifica quale tipo di pulsante viene creato, in base alle esigenze dell'ambiente.
+
+3. **Classe `Demo`**:
+   - Decide a runtime quale tipo di dialogo istanziare (e quindi quale tipo di pulsante usare) in base al sistema operativo. Una volta configurata l'istanza `dialog`, il resto del codice dell'applicazione rimane indipendente dal tipo specifico di pulsante.
+
+### Vantaggi dell'uso del Factory Method in questo esempio
+
+- **Flessibilità**: l'applicazione può funzionare in ambienti diversi (Windows, HTML) senza modificare il codice principale. La decisione su quale tipo di dialogo e pulsante usare viene presa in modo dinamico.
+- **Manutenzione**: aggiungere un nuovo tipo di pulsante per un'altra piattaforma (ad esempio, per macOS) è semplice. È sufficiente creare una nuova classe `MacDialog` che implementa `createButton()` per restituire un `MacButton`.
+- **Riutilizzo del Codice**: la logica comune per il rendering di una finestra di dialogo viene mantenuta nella classe `Dialog`, mentre i dettagli specifici di ogni tipo di pulsante sono gestiti dalle sottoclassi.
+
+In sintesi, il **Factory Method** consente alla classe `Dialog` di creare oggetti `Button` senza conoscere la loro implementazione concreta, demandando alle sottoclassi la responsabilità di specificare la versione esatta del pulsante. Questo rende il codice più flessibile e facilmente estendibile per nuove esigenze o piattaforme.
